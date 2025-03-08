@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Users List{% endblock %}
+
+{% block content %}
+
+
+<div class="container my-5 col-md-10 col-lg-8 ">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="border shadow-sm p-5 rounded-3 mb-4 ">
+        <h6 class="mb-3 text-start text-secondary">This platform currently has <span class="text-success"> {{user_type_num[0][1]}} admins, {{user_type_num[1][1]}} helpers, and {{user_type_num[2][1]}} visitors 👥 </span></h6>
+        <form method="GET" action="/search">
+            <div class="input-group">
+                <input type="text" class="form-control" name='query' placeholder="Search by username/ first name/ last name" value="{{query if query else ''}}">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="container border shadow-sm rounded-3 p-5">
+        <h3 class="text-success">
+            Users List
+        </h3>
+
+        <div class="mb-2 mt-3 d-flex align-items-center " style="overflow: hidden;">
+            <p class="me-4 mb-0 text-muted">Filter Users By:</p>
+            <div class="btn-group" >
+                <a href="?filter=all" class="btn btn-outline-success flex-fill text-nowrap {% if filter_status == 'all' %}active{% endif %}">All</a>
+                <a href="?filter=visitor" class="btn btn-outline-success flex-fill text-nowrap {% if filter_status == 'visitor' %}active{% endif %}">Visitor</a>
+                <a href="?filter=helper" class="btn btn-outline-success flex-fill text-nowrap {% if filter_status == 'helper' %}active{% endif %}">Helper</a>
+                <a href="?filter=admin" class="btn btn-outline-success flex-fill text-nowrap {% if filter_status == 'admin' %}active{% endif %}">Admin</a>
+            </div>
+        </div>
+    
+        <div class="mt-4">
+            <div class="card shadow-sm">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr class="text-center">
+                                <th>Avatar</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for user in users_filtered %}
+                                <tr class="text-center">
+                                    <td>                                    
+                                        <img src="
+                                        {% if user[7] %}
+                                            {{ url_for('static', filename=user[7].split('static/')[-1]) }}
+                                        {% else %}
+                                            {{ url_for('static', filename='yonghu-3.png') }}
+                                        {% endif %}" 
+                                        class="rounded-circle img-fluid" 
+                                        alt="Profile Picture" 
+                                        style="width: 30px;">
+                                    
+                                    </td>
+                                    <td>{{user[1]}}</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-light border text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{user[8]}}
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item {% if user[8] == 'admin' %}disabled{% endif %}"  href="{{ url_for('users.update_user', user_id=user[0], role='admin') }}" >Admin</a></li>
+                                                <li><a class="dropdown-item {% if user[8] == 'helper' %}disabled{% endif %}"  href="{{ url_for('users.update_user', user_id=user[0], role='helper') }}">Helper</a></li>
+                                                <li><a class="dropdown-item {% if user[8] == 'visitor' %}disabled{% endif %}"  href="{{ url_for('users.update_user', user_id=user[0], role='visitor') }}">Visitor</a></li>
+                                            </ul>
+                                        </div>                                           
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-light border text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{user[9]}}
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item {% if user[9] == 'active' %}disabled{% endif %}" href="{{ url_for('users.update_user', user_id=user[0], status='active') }}">active</a></li>
+                                                <li><a class="dropdown-item {% if user[9] == 'inactive' %}disabled{% endif %}" href="{{ url_for('users.update_user', user_id=user[0], status='inactive') }}">inactive</a></li>
+                                            </ul>
+                                        </div>                                                     
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('users.user_detail', user_id=user[0]) }}" class="btn btn-outline-success">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    setTimeout(function() {
+      let alerts = document.querySelectorAll('.alert');
+      alerts.forEach(function(alert) {
+        let bsAlert = new bootstrap.Alert(alert);
+        bsAlert.close();  
+      });
+    }, 2000); 
+</script>
+
+
+
+{% endblock %}

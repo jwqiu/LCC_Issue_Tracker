@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center mt-3"  >
+    <img src="
+    {% if profile_image %}
+        {{ url_for('static', filename=profile_image.split('static/')[-1]) }}
+    {% else %}
+        {{ url_for('static', filename='yonghu-3.png') }}
+    {% endif %}" 
+    class="rounded-circle img-fluid" 
+    alt="Profile Picture" 
+    style="width: 150px;">
+</div>
+<h3 class="text-center text-success">{{username}}</h3>
+<p class="text-muted text-center">{{role}}</p>
+<div class="d-flex justify-content-center">
+    <ul class="list-group " style="width: 400px; height: 230px;">
+        <li class="list-group-item"><strong>First Name:</strong>{{first_name}}</li>
+        <li class="list-group-item"><strong>Last Name:</strong>{{last_name}}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{email}}</li>
+        <li class="list-group-item"><strong>Location:</strong> {{location}}</li>
+    </ul>
+</div>
+<div class="d-flex justify-content-center">
+    <a href="/users" class="btn border-success text-success mt-3" style="width: 400px;">Exit</a>
+</div>
+
+
+
+
+{% endblock %}

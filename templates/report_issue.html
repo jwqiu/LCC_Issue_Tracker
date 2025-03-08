@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Report Issue{% endblock %}
+
+{% block content %}
+
+    <div class="d-flex align-items-center justify-content-center" style="min-height: 85vh;">
+        <div class="card border  p-5 shadow-sm " style="max-width: 500px;">
+            <form action="/report_submit" method="POST">
+                <div class="mb-3">
+                    <label for="" class="form-label">Brief Summary</label>
+                    <input type="text" class="form-control" id="summary" name="summary" required>
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label">Longer Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="6" required></textarea>
+                </div>
+                <p class="text-start text-secondary"><small>We really appreciate your support in keeping our campground great! 🙏</small> </p>
+                <button type="submit" class="btn bg-success text-white mt-3 w-100"> Submit</button>
+            </form>
+            <a href="/issues" type="submit" class="btn bg-light border text-dark mt-3 w-100"> Cancel and Exit</a>
+        </div>
+    </div>
+
+{% endblock %}

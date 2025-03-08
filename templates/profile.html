@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<div class="container py-5 col-md-8 col-lg-6">
+    <div class="tab-pane  " id="profile">
+        <div class="d-flex justify-content-center">
+            <img src="{% if profile_image %}{{ url_for('static', filename=profile_image.split('static/')[-1]) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}" 
+                    class="rounded-circle img-fluid" 
+                    alt="Profile Picture" 
+                    style="width: 150px; height: 150px;">
+        </div>
+        
+        <h3 class="text-center text-success">{{profile_detail[1]}}</h3>
+        <p class="text-muted text-center">{{profile_detail[8]}}</p>
+        <div class="d-flex justify-content-center">
+            <ul class="list-group " style="width: 400px; height: 180px;">
+                <li class="list-group-item"><strong>First Name:</strong> {{profile_detail[4]}}</li>
+                <li class="list-group-item"><strong>Last Name:</strong> {{profile_detail[5]}}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{profile_detail[3]}}</li>
+                <li class="list-group-item"><strong>Location:</strong> {{profile_detail[6]}}</li>
+            </ul>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="/profile_edit" class="btn border-success text-success mt-3" style="width: 400px;">Edit Profile</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

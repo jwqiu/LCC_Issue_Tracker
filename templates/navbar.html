@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-sm bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand fs-6" href="/issues">
+        <img src="{{ url_for('static', filename='dazhaohu.png') }}" alt="Logo" width="20" height="20" class="d-inline-block align-text-top me-1">
+        LCC <span class="text-success fw-bold">Issue Tracker</span>     
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="nav nav-underline ">
+                <li class="nav-item">
+                  <a class="nav-link {% if request.path == '/issues' %}active text-success{% else %}text-dark{% endif %} " aria-current="page" href="/issues">Issues(Home)</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.path == '/profile' %}active text-success{% else %}text-dark{% endif %} " href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% if request.path == '/password' %}active text-success{% else %}text-dark{% endif %}" href="/password">Password</a>
+                </li>
+
+                {% if session["role"] == "admin" %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/users' %}active text-success{% else %}text-dark{% endif %} " href="/users" >Users</a>
+                  </li>
+                {% else %}
+                  
+                {% endif %}
+
+                <li class="nav-item d-flex align-items-center">
+                    <a href="{{ url_for('logout.logout') }}" class="d-flex align-items-center text-decoration-none text-dark me-1">
+                        <img src="{{ url_for('static', filename='tuichu.png') }}" alt="Logo" width="20" height="20" class="me-1">
+                        <p class="mb-1 fs-6"><small>Log out</small></p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+
+    </div>
+</nav>

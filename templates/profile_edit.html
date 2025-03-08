@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Profile Edit{% endblock %}
+
+{% block content %}
+
+<div class="p-4">
+    <div class="mb-4">
+        <div class="d-flex justify-content-center"  >
+            <img src="{% if profile_image %}{{ url_for('static', filename=profile_image.split('static/')[-1]) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}" 
+            class="rounded-circle img-fluid" 
+            alt="Profile Picture" 
+            style="width: 150px; height: 150px;">
+        </div>
+        <h3 class="text-center text-success">{{username}}</h3>
+        <p class="text-muted text-center">{{role}}</p>
+    </div>
+    
+    <form method="POST" action="/profile_submit" enctype="multipart/form-data">
+        <div class="d-flex mb-3 justify-content-center">
+            <ul class="list-group " style="width: 400px;">
+
+                
+                <li class="list-group-item d-flex align-items-center justify-content-between">
+                    <strong>Update<br>Avatar:</strong>
+                    <input type="file" class="form-control" name="file" style="width: 200px;">
+                </li>
+                <li class="list-group-item d-flex align-items-center justify-content-between">
+                    <strong>First Name:</strong>
+                    <input type="text" class="form-control w-50" name="first_name" value="{{first_name}}">
+                </li>
+                <li class="list-group-item d-flex align-items-center justify-content-between">
+                    <strong>Last Name:</strong>
+                    <input type="text" class="form-control w-50" name="last_name" value="{{last_name}}">
+                </li>
+                <li class="list-group-item d-flex align-items-center justify-content-between">
+                    <strong>Email:</strong>
+                    <input type="email" class="form-control w-50" name="email" value="{{email}}">
+                </li>
+                <li class="list-group-item d-flex align-items-center justify-content-between">
+                    <strong>Location:</strong>
+                    <input type="text" class="form-control w-50" name="location" value="{{location}}">
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button href="/profile_submit" class="btn bg-success text-white my-3"type='submit' style="width: 400px;">Update</button>
+        </div>
+    </form>
+
+    <div class="d-flex justify-content-center">
+        <a href="/profile" class="btn bg-light border text-secondary mb-3" style="width: 400px;">Cancel n Exit</a>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
