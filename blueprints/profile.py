@@ -15,36 +15,35 @@ if not os.path.exists(UPLOAD_FOLDER):
 @profile.route('/profile_submit', methods=['POST'])
 def profile_submit():
 
-    filename = None
+    profile_image_path = None  
     user_id = session.get('user_id')
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     email = request.form['email']
     location = request.form['location']
 
-    file = request.files.get('file')  
+    file = request.files.get('file')
     if file and file.filename:
-        filename = secure_filename(file.filename)  
-        file_path = os.path.join(UPLOAD_FOLDER, filename)  
-        file.save(file_path)  
-        profile_image_path = f"static/uploads/{filename}"
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(file_path)
+        profile_image_path = f"uploads/{filename}"  
 
     conn = db_connection()
     cursor = conn.cursor()
 
-    if filename is None:
-
-        cursor.execute("""
-            UPDATE users 
-            SET first_name = %s, last_name = %s, email = %s, location = %s
-            WHERE user_id = %s
-        """, (first_name, last_name, email, location, user_id))
-    else:
+    if profile_image_path:
         cursor.execute("""
             UPDATE users 
             SET first_name = %s, last_name = %s, email = %s, location = %s, profile_image = %s
             WHERE user_id = %s
         """, (first_name, last_name, email, location, profile_image_path, user_id))
+    else:
+        cursor.execute("""
+            UPDATE users 
+            SET first_name = %s, last_name = %s, email = %s, location = %s
+            WHERE user_id = %s
+        """, (first_name, last_name, email, location, user_id))
 
     conn.commit()
     cursor.close()
