@@ -26,7 +26,7 @@ def issues():
 
     cursor.execute("""
         SELECT status, COUNT(*) AS count
-        FROM LCC.issues
+        FROM issues
         GROUP BY status
         ORDER BY FIELD(status, 'new', 'open', 'stalled', 'resolved');
     """
