@@ -11,6 +11,7 @@ UPLOAD_FOLDER = 'static/uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+UPLOAD_FOLDER = "/home/JunwenQiu1162541/LCC_Issue_Tracker/static/uploads"
 
 @profile.route('/profile_submit', methods=['POST'])
 def profile_submit():
