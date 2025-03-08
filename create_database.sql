@@ -1,6 +1,4 @@
-USE LCC;
-
-CREATE TABLE users (
+CREATE TABLE `JunwenQiu1162541$LCC_Issue_Tracker`.users (
     user_id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(20) NOT NULL,
     password_hash CHAR(60) NOT NULL,
@@ -14,7 +12,7 @@ CREATE TABLE users (
     PRIMARY KEY (user_id)
 );
 
-CREATE TABLE issues (
+CREATE TABLE `JunwenQiu1162541$LCC_Issue_Tracker`.issues (
     issue_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     summary VARCHAR(255) NOT NULL,
@@ -25,7 +23,7 @@ CREATE TABLE issues (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE comments (
+CREATE TABLE `JunwenQiu1162541$LCC_Issue_Tracker`.comments (
     comment_id INT NOT NULL AUTO_INCREMENT,
     issue_id INT NOT NULL,
     user_id INT NOT NULL,

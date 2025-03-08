@@ -1,4 +1,4 @@
-INSERT INTO users (username, password_hash, email, first_name, last_name, location, profile_image, role, status)
+INSERT INTO `JunwenQiu1162541$LCC_Issue_Tracker`.users  (username, password_hash, email, first_name, last_name, location, profile_image, role, status)
 VALUES 
 ('john_doe', '$2b$12$abc123hashfake', 'john.doe@gmail.com', 'John', 'Doe', 'New York, USA', NULL, 'visitor', 'active'),
 ('jane_doe', '$2b$12$abc124hashfake', 'jane.doe@yahoo.com', 'Jane', 'Doe', 'Los Angeles, USA', NULL, 'visitor', 'active'),
@@ -28,7 +28,7 @@ VALUES
 ('admin_david', '$2b$12$adminhash1', 'david.ross@company.com', 'David', 'Ross', 'San Diego, USA', NULL, 'admin', 'active'),
 ('admin_ella', '$2b$12$adminhash2', 'ella.harrison@company.com', 'Ella', 'Harrison', 'Singapore', NULL, 'admin', 'active');
 
-INSERT INTO issues (user_id, summary, description, created_at, status)
+INSERT INTO `JunwenQiu1162541$LCC_Issue_Tracker`.issues  (user_id, summary, description, created_at, status)
 VALUES
 (1, 'Campsite Trash Overflowing', 'The trash bins near campsite 15 are overflowing and attracting animals.', '2025-03-06 14:22:24', 'open'),
 (3, 'Broken Fire Pit', 'The fire pit at campsite 23 is broken, making it unsafe to use.', '2025-03-03 17:00:24', 'new'),
@@ -51,7 +51,7 @@ VALUES
 (18, 'Electrical Outlet Malfunction', 'The charging station near the main pavilion is not working.', '2025-03-02 18:31:24', 'new'),
 (20, 'Parking Lot Lights Not Working', 'The lights in the main parking lot are out, making it unsafe at night.', '2025-03-06 17:24:24', 'stalled');
 
-INSERT INTO comments (issue_id, user_id, content, created_at) VALUES
+INSERT INTO `JunwenQiu1162541$LCC_Issue_Tracker`.comments  (issue_id, user_id, content, created_at) VALUES
 (11, 20, 'I saw some tents in a no-camping zone.', '2025-03-04 06:30:24'),
 (11, 15, 'I saw some tents in a no-camping zone.', '2025-03-03 22:30:24'),
 (11, 4, 'Hope the camp staff can relocate them.', '2025-03-04 02:30:24'),
