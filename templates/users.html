@@ -60,12 +60,7 @@
                             {% for user in users_filtered %}
                                 <tr class="text-center">
                                     <td>                                    
-                                        <img src="
-                                        {% if user[7] %}
-                                            {{ url_for('static', filename=user[7].split('static/')[-1]) }}
-                                        {% else %}
-                                            {{ url_for('static', filename='yonghu-3.png') }}
-                                        {% endif %}" 
+                                        <img src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}"
                                         class="rounded-circle img-fluid" 
                                         alt="Profile Picture" 
                                         style="width: 30px;">

@@ -7,7 +7,7 @@
 <div class="container py-5 col-md-8 col-lg-6">
     <div class="tab-pane  " id="profile">
         <div class="d-flex justify-content-center">
-            <img src="{% if profile_image %}{{ url_for('static', filename=profile_image.split('static/')[-1]) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}" 
+            <img src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}" 
                     class="rounded-circle img-fluid" 
                     alt="Profile Picture" 
                     style="width: 150px; height: 150px;">

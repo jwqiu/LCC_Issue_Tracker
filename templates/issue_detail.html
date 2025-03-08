@@ -76,12 +76,7 @@
 
                 <li class="list-group-item d-flex">
                     <div class="d-flex justify-content-center align-items-center me-3">
-                        <img src="
-                        {% if comment[12] %}
-                            {{ url_for('static', filename=comment[12].split('static/')[-1]) }}
-                        {% else %}
-                            {{ url_for('static', filename='yonghu-3.png') }}
-                        {% endif %}" 
+                        <img src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}"
                         class="rounded-circle img-fluid" 
                         alt="Profile Picture" 
                         style="width: 30px;">
