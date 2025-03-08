@@ -60,7 +60,7 @@ def profile_edit():
 
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM LCC.users WHERE user_id = %s",(user_id,))
+    cursor.execute("SELECT * FROM users WHERE user_id = %s",(user_id,))
     profile_detail=cursor.fetchone()
 
     first_name=profile_detail[4]
@@ -91,7 +91,7 @@ def profile_home():
 
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM LCC.users WHERE user_id = %s",(user_id,))
+    cursor.execute("SELECT * FROM users WHERE user_id = %s",(user_id,))
     profile_detail=cursor.fetchone()
     profile_image=profile_detail[7]
 

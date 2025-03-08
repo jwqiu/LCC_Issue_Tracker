@@ -30,7 +30,7 @@ def comment_submit():
         return redirect(url_for('issues.issue_detail',issue_id=issue_id))
     else:
         if issue_status != 'open' :
-            cursor.execute("UPDATE LCC.issues SET status = %s WHERE issue_id = %s", ('open', issue_id))
+            cursor.execute("UPDATE issues SET status = %s WHERE issue_id = %s", ('open', issue_id))
             conn.commit()
             return redirect(url_for('issues.issue_detail',issue_id=issue_id))
         else:

@@ -29,7 +29,7 @@ def login_submit():
     conn = db_connection() 
     cursor=conn.cursor(buffered=True)         
 
-    cursor.execute("SELECT email,password_hash,username,role,user_id,status FROM LCC.users WHERE username=%s;",(username,))
+    cursor.execute("SELECT email,password_hash,username,role,user_id,status FROM users WHERE username=%s;",(username,))
     account=cursor.fetchone()
 
     cursor.close()

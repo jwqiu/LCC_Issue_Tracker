@@ -15,13 +15,13 @@ def issues():
     conn = db_connection() 
     cursor=conn.cursor()         
 
-    cursor.execute("SELECT * FROM LCC.issues;")
+    cursor.execute("SELECT * FROM issues;")
     issues_data = cursor.fetchall()
     status_order = {"new": 1, "open": 2, "stalled": 3, "resolved": 4}
     issues_data.sort(key=lambda issue: status_order.get(issue[5].lower(), 5))
 
     user_id=session.get('user_id')
-    cursor.execute("SELECT COUNT(*) FROM LCC.issues WHERE user_id = %s",(user_id,))
+    cursor.execute("SELECT COUNT(*) FROM issues WHERE user_id = %s",(user_id,))
     num_reported = cursor.fetchone()[0]
 
     cursor.execute("""
@@ -33,10 +33,10 @@ def issues():
     )
     issues_type_num=cursor.fetchall()
 
-    cursor.execute("SELECT * FROM LCC.issues WHERE user_id = %s",(user_id,))
+    cursor.execute("SELECT * FROM issues WHERE user_id = %s",(user_id,))
     your_issues=cursor.fetchall()
 
-    cursor.execute("SELECT * FROM LCC.users WHERE user_id = %s",(user_id,))
+    cursor.execute("SELECT * FROM users WHERE user_id = %s",(user_id,))
     profile_detail=cursor.fetchone()
 
     cursor.close()
@@ -145,7 +145,7 @@ def issue_update():
     cursor=conn.cursor()
     issue_id = request.args.get('issue_id')  
     status=request.args.get('status')   
-    cursor.execute("UPDATE LCC.issues SET status = %s WHERE issue_id = %s", (status, issue_id))
+    cursor.execute("UPDATE issues SET status = %s WHERE issue_id = %s", (status, issue_id))
     conn.commit()
 
     cursor.close()

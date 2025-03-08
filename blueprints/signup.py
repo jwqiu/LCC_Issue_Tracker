@@ -32,7 +32,7 @@ def signup_1_submit():
 
     conn = db_connection() 
     cursor=conn.cursor()      
-    cursor.execute('SELECT username FROM LCC.users WHERE username = %s;',(username,))
+    cursor.execute('SELECT username FROM users WHERE username = %s;',(username,))
     result=cursor.fetchone()
 
     cursor.close()

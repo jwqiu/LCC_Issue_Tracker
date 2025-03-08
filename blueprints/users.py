@@ -13,7 +13,7 @@ def user_detail(user_id):
     conn = db_connection() 
     cursor=conn.cursor()  
 
-    cursor.execute("SELECT * FROM LCC.users WHERE user_id=%s;",(user_id,))
+    cursor.execute("SELECT * FROM users WHERE user_id=%s;",(user_id,))
     profile_detail=cursor.fetchone()
 
     username=profile_detail[1]
@@ -39,7 +39,7 @@ def users_list():
 
     conn = db_connection() 
     cursor=conn.cursor()    
-    cursor.execute("SELECT * FROM LCC.users;")
+    cursor.execute("SELECT * FROM users;")
     users=cursor.fetchall()
 
     cursor.execute("""
@@ -54,9 +54,9 @@ def users_list():
     filter_status = request.args.get('filter', 'all')
 
     if filter_status == 'all':
-        cursor.execute("SELECT * FROM LCC.users;")
+        cursor.execute("SELECT * FROM users;")
     else:
-        cursor.execute("SELECT * FROM LCC.users WHERE role = %s;", (filter_status,))
+        cursor.execute("SELECT * FROM users WHERE role = %s;", (filter_status,))
 
     users_filtered = cursor.fetchall()
 
@@ -97,7 +97,7 @@ def search_users():
     if query:
         cursor.execute("""
             SELECT * 
-            FROM LCC.users 
+            FROM users 
             WHERE username=%s OR first_name=%s OR last_name=%s
         """, (query, query, query))
         search_results = cursor.fetchall()
@@ -106,7 +106,7 @@ def search_users():
 
     cursor.execute("""
         SELECT role, COUNT(*) AS count
-        FROM LCC.users
+        FROM users
         GROUP BY role
         ORDER BY FIELD(role, 'admin', 'helper', 'visitor');
     """
@@ -115,7 +115,7 @@ def search_users():
 
     users_filtered = []
     if not search_results:
-        cursor.execute("SELECT * FROM LCC.users")  
+        cursor.execute("SELECT * FROM users")  
         users_filtered = cursor.fetchall()
 
     cursor.close()

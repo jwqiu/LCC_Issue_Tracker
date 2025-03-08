@@ -23,7 +23,7 @@ def password_submit():
     conn = db_connection() 
     cursor=conn.cursor(buffered=True)    
 
-    cursor.execute("SELECT password_hash FROM LCC.users WHERE user_id=%s;",(user_id,))
+    cursor.execute("SELECT password_hash FROM users WHERE user_id=%s;",(user_id,))
     password_hash=cursor.fetchone()
 
     if bcrypt.check_password_hash(password_hash[0], currentpassword):
