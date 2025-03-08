@@ -44,7 +44,7 @@ def users_list():
 
     cursor.execute("""
         SELECT role, COUNT(*) AS count
-        FROM LCC.users
+        FROM users
         GROUP BY role
         ORDER BY FIELD(role, 'admin', 'helper', 'visitor');
     """
