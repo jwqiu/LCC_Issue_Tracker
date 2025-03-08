@@ -43,7 +43,7 @@ def signup_1_submit():
     elif len(username) > 20:
         return render_template('signup_1.html',error_message="Your username cannot exceed 20 characters.")
     elif password1!=password2:
-        return render_template('signup_1.html',error_message="The two new passwords you entered do not match.")
+        return render_template('signup_1.html',username=username,error_message="The two new passwords you entered do not match.")
     
     elif not re.match(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z0-9]+$', password1): 
         return render_template('signup_1.html',username=username,error_message="Your password should contain at least one letter and one number")
