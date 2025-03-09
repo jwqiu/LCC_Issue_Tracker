@@ -14,12 +14,12 @@
                 <p class="fs-6 text-muted">Welcome , Visitor 🧳</p>
                 <strong class="text-secondary"> 
                     <img src="
-                        {% if profile_detail[7] %}
-                            {{ url_for('static', filename=profile_detail[7]) }}
+                        {% if profile_image %}
+                            {{ url_for('static', filename=profile_image) }}
                         {% else %}
                             {{ url_for('static', filename='yonghu-3.png') }}
                         {% endif %}" 
-                        class="rounded-circle img-fluid ms-2" 
+                        class="rounded-circle img-fluid ms-3" 
                         alt="Profile Picture" 
                         style="width: 40px;">
                     <span class="text-success">{{username}}</span>
@@ -41,10 +41,15 @@
             <h4 class="mb-0">
                 <p class="fs-6 text-muted">Welcome , Helper 🛠️</p>
                 <strong class="text-secondary"> 
-                    <img src="{% if profile_detail[7] %}{{ url_for('static', filename=profile_detail[7]) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}"
-                        class="rounded-circle img-fluid ms-2" 
-                        alt="Profile Picture" 
-                        style="width: 40px;">
+                    <img src="
+                    {% if profile_image %}
+                        {{ url_for('static', filename=profile_image) }}
+                    {% else %}
+                        {{ url_for('static', filename='yonghu-3.png') }}
+                    {% endif %}" 
+                    class="rounded-circle img-fluid ms-3" 
+                    alt="Profile Picture" 
+                    style="width: 40px;">
                     <span class="text-success">{{username}}</span>
                 </strong> 
             </h4>
@@ -59,12 +64,12 @@
                 <p class="fs-6 text-muted">Welcome , Admin 🔐</p>
                 <strong class="text-secondary"> 
                     <img src="
-                        {% if profile_detail[7] %}
-                            {{ url_for('static', filename=profile_detail[7]) }}
+                        {% if profile_image %}
+                            {{ url_for('static', filename=profile_image) }}
                         {% else %}
                             {{ url_for('static', filename='yonghu-3.png') }}
                         {% endif %}" 
-                        class="rounded-circle img-fluid ms-2" 
+                        class="rounded-circle img-fluid ms-3" 
                         alt="Profile Picture" 
                         style="width: 40px;">
                     <span class="text-success">{{username}}</span>

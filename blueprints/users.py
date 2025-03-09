@@ -3,19 +3,27 @@ from database import db_connection
 
 users = Blueprint('users',__name__)
 
+
+"""
+Every request to the user module needs to go through a permission and role check first
+"""
 @users.before_request
 def restrict_to_admin():
     if  session['role'] != 'admin':
         return render_template('permission.html',next_page=url_for('issues.issues'))
+    
+
 
 @users.route('/user_detail/<int:user_id>')
 def user_detail(user_id):
     conn = db_connection() 
     cursor=conn.cursor()  
 
+    """
+    check and display the use detail
+    """
     cursor.execute("SELECT * FROM users WHERE user_id=%s;",(user_id,))
     profile_detail=cursor.fetchone()
-
     username=profile_detail[1]
     role=profile_detail[8]
     first_name=profile_detail[4]
@@ -42,6 +50,10 @@ def users_list():
     cursor.execute("SELECT * FROM users;")
     users=cursor.fetchall()
 
+
+    """
+    Collect and display some existing user information for the admin
+    """
     cursor.execute("""
         SELECT role, COUNT(*) AS count
         FROM users
@@ -51,17 +63,19 @@ def users_list():
     )
     user_type_num=cursor.fetchall()
     
-    filter_status = request.args.get('filter', 'all')
 
+    """
+    I've added a filtering feature that allows users to be filtered based on their role
+    """
+    filter_status = request.args.get('filter', 'all')
     if filter_status == 'all':
         cursor.execute("SELECT * FROM users;")
     else:
         cursor.execute("SELECT * FROM users WHERE role = %s;", (filter_status,))
-
     users_filtered = cursor.fetchall()
 
-
     return render_template('users.html',users=users,user_type_num=user_type_num,users_filtered=users_filtered,filter_status=filter_status)
+
 
 @users.route('/update_user')
 def update_user():
@@ -72,6 +86,9 @@ def update_user():
     status=request.args.get('status')   
     new_role = request.args.get('role')
 
+    """
+    update user's role and active/inactive user here
+    """
     if new_role:   
         cursor.execute("UPDATE users SET role = %s WHERE user_id = %s", (new_role, user_id))
         conn.commit()
@@ -94,6 +111,9 @@ def search_users():
     cursor = conn.cursor()
     no_results = False
 
+    """
+    Show search results if the user has searched; otherwise, display the full user list
+    """
     if query:
         cursor.execute("""
             SELECT * 

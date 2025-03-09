@@ -3,15 +3,16 @@ from database import db_connection
 from datetime import datetime
 
 
-"""
-"""
-
 comment = Blueprint('comment',__name__)
 
 @comment.route('/comment',methods=['POST'])
 def comment_submit():
+    
     conn = db_connection() 
-    cursor=conn.cursor()        
+    cursor=conn.cursor()
+    """
+    Store the comments submitted by users by retrieving the hidden variables issue_id from the issue detail form
+    """
     issue_id=request.form.get('issue_id')
     content=request.form.get("comment")
     issue_status=request.form.get("issue_status")
@@ -20,9 +21,19 @@ def comment_submit():
     cursor.execute("INSERT INTO comments (issue_id,user_id,content,created_at) VALUES (%s, %s, %s, %s)",(issue_id,user_id,content,current_time))
     conn.commit()
 
-
+    """
+    Display a success notification, The frontend will get this information and show a notification
+    """
     flash("✅ Comment added successfully", "success")
     
+
+
+    """
+    If the user is a visitor, nothing happens and redirect to the issue detail page. 
+    Otherwise, we will check the issue's status and the commenter's role to decide whether to update the issue status to 'open' 
+    and update the database accordingly
+
+    """
     role=session.get('role')
     if role == 'visitor':
         cursor.close()

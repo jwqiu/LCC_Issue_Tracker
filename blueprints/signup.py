@@ -18,13 +18,16 @@ def db_connection():
 
 signup = Blueprint('signup',__name__)
 
-
+"""
+Because the user needs to fill in a lot of information, the registration is done in two steps
+"""
 @signup.route('/signup_1')
 def signup_1():
     return render_template("signup_1.html")
 
 @signup.route('/signup_1_submit', methods=["POST"])
 def signup_1_submit():
+    
     username=request.form.get("username")
     password1=request.form.get("password1")
     password2=request.form.get("password2")

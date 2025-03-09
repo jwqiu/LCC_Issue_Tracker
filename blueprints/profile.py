@@ -4,7 +4,6 @@ from werkzeug.utils import secure_filename
 import os
 
 
-
 profile = Blueprint('profile',__name__)
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -13,44 +12,20 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 UPLOAD_FOLDER = "/home/JunwenQiu1162541/LCC_Issue_Tracker/static/uploads"
 
-@profile.route('/profile_submit', methods=['POST'])
-def profile_submit():
+@profile.route('/profile')
+def profile_home():
 
-    profile_image_path = None  
-    user_id = session.get('user_id')
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    email = request.form['email']
-    location = request.form['location']
-
-    file = request.files.get('file')
-    if file and file.filename:
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(UPLOAD_FOLDER, filename)
-        file.save(file_path)
-        profile_image_path = f"uploads/{filename}"  
-
+    """
+    When the user opens the profile page, their user ID is fetched from the session, and their profile details are retrieved and displayed
+    """
+    user_id=session.get('user_id')
     conn = db_connection()
     cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE user_id = %s",(user_id,))
+    profile_detail=cursor.fetchone()
+    profile_image=profile_detail[7]
 
-    if profile_image_path:
-        cursor.execute("""
-            UPDATE users 
-            SET first_name = %s, last_name = %s, email = %s, location = %s, profile_image = %s
-            WHERE user_id = %s
-        """, (first_name, last_name, email, location, profile_image_path, user_id))
-    else:
-        cursor.execute("""
-            UPDATE users 
-            SET first_name = %s, last_name = %s, email = %s, location = %s
-            WHERE user_id = %s
-        """, (first_name, last_name, email, location, user_id))
-
-    conn.commit()
-    cursor.close()
-    conn.close()
-
-    return redirect(url_for('profile.profile_home'))
+    return render_template('profile.html',profile_detail=profile_detail,profile_image=profile_image)
 
 
 @profile.route('/profile_edit')
@@ -84,15 +59,50 @@ def profile_edit():
     role=role,
     profile_image=profile_image)
 
-@profile.route('/profile')
-def profile_home():
 
-    user_id=session.get('user_id')
+
+@profile.route('/profile_submit', methods=['POST'])
+def profile_submit():
+
+    """
+    Get the necessary variables
+    """
+    profile_image_path = None  
+    user_id = session.get('user_id')
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    email = request.form['email']
+    location = request.form['location']
+
+
+    """
+    When the user submits changes, update the database differently depending on whether an image was uploaded
+    """
+    file = request.files.get('file')
+    if file and file.filename:
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(file_path)
+        profile_image_path = f"uploads/{filename}"  
 
     conn = db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE user_id = %s",(user_id,))
-    profile_detail=cursor.fetchone()
-    profile_image=profile_detail[7]
 
-    return render_template('profile.html',profile_detail=profile_detail,profile_image=profile_image)
+    if profile_image_path:
+        cursor.execute("""
+            UPDATE users 
+            SET first_name = %s, last_name = %s, email = %s, location = %s, profile_image = %s
+            WHERE user_id = %s
+        """, (first_name, last_name, email, location, profile_image_path, user_id))
+    else:
+        cursor.execute("""
+            UPDATE users 
+            SET first_name = %s, last_name = %s, email = %s, location = %s
+            WHERE user_id = %s
+        """, (first_name, last_name, email, location, user_id))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('profile.profile_home'))

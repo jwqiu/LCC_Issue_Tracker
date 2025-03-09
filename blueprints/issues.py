@@ -15,11 +15,13 @@ def issues():
     conn = db_connection() 
     cursor=conn.cursor()         
 
-    cursor.execute("SELECT * FROM issues;")
-    issues_data = cursor.fetchall()
-    status_order = {"new": 1, "open": 2, "stalled": 3, "resolved": 4}
-    issues_data.sort(key=lambda issue: status_order.get(issue[5].lower(), 5))
 
+    """
+    Calculate the number of issues reported by the user
+    Calculate the number of existing issues by type 
+    Retrieve the user's profile image URL from the database and other user information
+    adjust the frontend display accordingly based on the above information
+    """
     user_id=session.get('user_id')
     cursor.execute("SELECT COUNT(*) FROM issues WHERE user_id = %s",(user_id,))
     num_reported = cursor.fetchone()[0]
@@ -33,11 +35,29 @@ def issues():
     )
     issues_type_num=cursor.fetchall()
 
+    cursor.execute("SELECT * FROM users WHERE user_id = %s",(user_id,))
+    profile_detail=cursor.fetchone()
+    profile_image=profile_detail[7]
+
+    username=session.get("username")
+    role=session.get("role")
+
+
+
+    """
+    Query the issues reported by the user and display it in a seperate module
+    """
     cursor.execute("SELECT * FROM issues WHERE user_id = %s",(user_id,))
     your_issues=cursor.fetchall()
 
-    cursor.execute("SELECT * FROM users WHERE user_id = %s",(user_id,))
-    profile_detail=cursor.fetchone()
+
+    """
+    Add simple pagination to the issue list
+    """
+    cursor.execute("SELECT * FROM issues;")
+    issues_data = cursor.fetchall()
+    status_order = {"new": 1, "open": 2, "stalled": 3, "resolved": 4}
+    issues_data.sort(key=lambda issue: status_order.get(issue[5].lower(), 5))
 
     cursor.close()
     conn.close()
@@ -57,9 +77,6 @@ def issues():
 
     total_pages = (len(filtered_issues) + per_page - 1) // per_page 
 
-    username=session.get("username")
-    role=session.get("role")
-
 
     return render_template('issues.html',paginated_data=paginated_data,
         page=page,
@@ -70,10 +87,16 @@ def issues():
         issues_type_num=issues_type_num,
         your_issues=your_issues,
         role=role,
-        profile_detail=profile_detail)        
+        profile_image=profile_image)        
 
 @issues_bp.route('/issue/<int:issue_id>')
 def issue_detail(issue_id):
+    
+    
+    """
+    Retrieve issue details by joining the `users` and `issues` tables based on `user_id`, filtering by `issue_id`.  
+    If the issue does not exist, render the `permission.html` template with a redirect link to the issues page.  
+    """
     conn = db_connection() 
     cursor=conn.cursor()
     cursor.execute("""
@@ -89,6 +112,10 @@ def issue_detail(issue_id):
     
     issue_status=issue[5]       
 
+
+    """
+    Query and display the comments related to the issue
+    """
     cursor.execute("""
 
     SELECT comments.*,users.*
@@ -99,10 +126,13 @@ def issue_detail(issue_id):
     ,(issue_id,)
     )
     comments=cursor.fetchall()
-
     cursor.close()
     conn.close()
 
+
+    """
+    Check whether the user has permission to access this issue
+    """
     role=session.get('role')
     user_id=session.get('user_id')
     if role == 'visitor':
@@ -115,11 +145,17 @@ def issue_detail(issue_id):
 
 
 
-
+"""
+Render the report issue page
+"""
 @issues_bp.route('/report')
 def report():
     return render_template('report_issue.html')
 
+
+"""
+We have a separate route to handle the submission of a new issue
+"""
 @issues_bp.route('/report_submit',methods=['POST'])
 def report_submit():
     conn = db_connection() 
@@ -140,7 +176,11 @@ def report_submit():
 
 @issues_bp.route('/issue/issue_update')
 def issue_update():
-
+    
+    """
+    The user can update the issue status and manage changes here    
+    Since the frontend only displays the issue status change button for admins and helpers, there is no need to distinguish user roles here
+    """
     conn = db_connection() 
     cursor=conn.cursor()
     issue_id = request.args.get('issue_id')  
