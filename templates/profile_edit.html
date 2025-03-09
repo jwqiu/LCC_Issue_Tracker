@@ -7,6 +7,7 @@
 <div class="p-4">
     <div class="mb-4">
         <div class="d-flex justify-content-center"  >
+            <!-- If the user has uploaded a profile image before, display it; otherwise, show the default user image -->
             <img src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}"
             class="rounded-circle img-fluid" 
             alt="Profile Picture" 

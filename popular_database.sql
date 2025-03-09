@@ -26,7 +26,16 @@ VALUES
 ('isabella_carter', '$2b$12$helperhash4', 'isabella.carter@example.com', 'Isabella', 'Carter', 'Osaka, Japan', NULL, 'helper', 'active'),
 ('mason_rivera', '$2b$12$helperhash5', 'mason.rivera@gmail.com', 'Mason', 'Rivera', 'Stockholm, Sweden', NULL, 'helper', 'active'),
 ('admin_david', '$2b$12$adminhash1', 'david.ross@company.com', 'David', 'Ross', 'San Diego, USA', NULL, 'admin', 'active'),
-('admin_ella', '$2b$12$adminhash2', 'ella.harrison@company.com', 'Ella', 'Harrison', 'Singapore', NULL, 'admin', 'active');
+('admin_ella', '$2b$12$adminhash2', 'ella.harrison@company.com', 'Ella', 'Harrison', 'Singapore', NULL, 'admin', 'active'),
+('junwen1', '$2b$12$jhSNmJMwjcyVHy1fZY.yneZF44ijCz4iCFXRKYqsptzeHsSwMc5AW', 'jwqiu1111@gmail.com', 'junwen', 'chen', 'shenzhen', 'uploads/WechatIMG846.jpeg', 'admin', 'active'),
+('junwen2', '$2b$12$7dAvDDzUGC/JtW7kTeK6qO68io87byPNa.B9ljNht.3IJDUp068pC', 'jwqiu@gmail.com', 'junwen', 'qiu', 'shenzhen', 'uploads/emoji-kiss.svg', 'helper', 'active'),
+('junwen3', '$2b$12$BB0Kb9llm2mhdp0Syhkwmu1wTaENf/xZpTNup6bZw7878AiD00vyK', 'jwqiu@gmail.com ', 'junwen', 'junwen', 'shanghai', 'maltese-portrait.jpg', 'visitor', 'active');
+
+
+
+
+
+
 
 INSERT INTO `JunwenQiu1162541$LCC_Issue_Tracker`.issues  (user_id, summary, description, created_at, status)
 VALUES

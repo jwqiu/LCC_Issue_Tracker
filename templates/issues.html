@@ -8,18 +8,19 @@
     <div class="tab-pane  active" id="issue">
         <div class="card border shadow-sm p-5 mb-4 ">
             
+            <!--Check the user's role, Display different welcome content for different roles -->
             {% if session.get("role") == "visitor" %}
-
             <h4 class="mb-0">
                 <p class="fs-6 text-muted">Welcome , Visitor 🧳</p>
                 <strong class="text-secondary"> 
+                    <!-- If the user has uploaded a profile image before, display it; otherwise, show the default user image -->
                     <img src="
                         {% if profile_image %}
                             {{ url_for('static', filename=profile_image) }}
                         {% else %}
                             {{ url_for('static', filename='yonghu-3.png') }}
                         {% endif %}" 
-                        class="rounded-circle img-fluid me-3" 
+                        class="rounded-circle img-fluid me-2" 
                         alt="Profile Picture" 
                         style="width: 40px;">
                     <span class="text-success">{{username}}</span>
@@ -37,7 +38,6 @@
             </h6>
 
             {% elif session.get("role") == "helper" %}
-
             <h4 class="mb-0">
                 <p class="fs-6 text-muted">Welcome , Helper 🛠️</p>
                 <strong class="text-secondary"> 
@@ -47,7 +47,7 @@
                     {% else %}
                         {{ url_for('static', filename='yonghu-3.png') }}
                     {% endif %}" 
-                    class="rounded-circle img-fluid me-3" 
+                    class="rounded-circle img-fluid me-2" 
                     alt="Profile Picture" 
                     style="width: 40px;">
                     <span class="text-success">{{username}}</span>
@@ -59,7 +59,6 @@
             </h6>
 
             {% elif session.get("role") == "admin" %}
-
             <h4 class="mb-0">
                 <p class="fs-6 text-muted">Welcome , Admin 🔐</p>
                 <strong class="text-secondary"> 
@@ -69,7 +68,7 @@
                         {% else %}
                             {{ url_for('static', filename='yonghu-3.png') }}
                         {% endif %}" 
-                        class="rounded-circle img-fluid me-3" 
+                        class="rounded-circle img-fluid me-2" 
                         alt="Profile Picture" 
                         style="width: 40px;">
                     <span class="text-success">{{username}}</span>
@@ -79,12 +78,13 @@
                 <br>
                 <p><span class="text-success">{{issues_type_num[0][1]}} new, {{issues_type_num[1][1]}} open, and {{issues_type_num[2][1]}} stalled issues</span> are being worked on 💪 </p>
             </h6>
-
             {% endif %}
 
             <a href="/report" class="btn border-success text-success text-nowrap mt-2 w-50" style="max-width: 300px;">Report New Issue</a>
         </div>
         
+        
+        <!-- Check the user's role,Display issues list only for admin and helper -->
         {% if session.get("role") == "visitor" %}
 
         {% else %}
@@ -151,7 +151,9 @@
             </div>
             
         {% endif %}
-
+        
+        
+        <!-- display own reported issues and notification if no issues have been reported by user-->
         {% if your_issues %}
         <div class="container border rounded-3 mt-4 p-5 shadow-sm">
             <h4 class="text-success">

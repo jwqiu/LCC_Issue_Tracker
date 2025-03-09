@@ -17,6 +17,11 @@ app.secret_key = "key_for_assessment_course_639"
 
 bcrypt.init_app(app) 
 
+
+"""
+If the user is trying to access a restricted page without logging in, 
+store a flag in the session and redirect them to the login page. 
+"""
 @app.before_request
 def require_login():
     allowed_routes = [

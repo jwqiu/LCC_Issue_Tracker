@@ -8,6 +8,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 
+    <!-- display differ nitification base on different mistake and error during the login process -->
     {% if error_type == "wrong_password" %}
         <div class="container mt-3">
             <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -57,7 +58,6 @@
 
    
 
-    
     <div class="container d-flex justify-content-center align-items-center " style="height: 100vh;">
         <div class="bg-white shadow-lg rounded-4 d-flex justify-content-center align-items-center flex-column w-100 py-5 px-5" style="max-width: 500px;" >
 

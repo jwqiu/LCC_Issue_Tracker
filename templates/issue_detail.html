@@ -24,6 +24,7 @@
         <li class="list-group-item"><strong>Reported Date:</strong> {{ issue[4] }}</li>
         <li class="list-group-item"><strong>Reported By:</strong> {{ issue[7] }}</li>
         <li class="list-group-item"><strong>Issue Type:</strong>                                 
+        <!-- Display the issue status as either static text or a button depending on the user's role -->
             {% if role == 'visitor' %}
                 {% if issue[5]=="new" %}
                     <span class="badge bg-danger rounded-pill">New</span>
@@ -65,6 +66,7 @@
     </div>
 </div>
 
+<!-- check and display the comments data if any -->
 <div class="container py-3 " style="max-width:800px;">
     <div class="card shadow-sm">
         <div class="card-header bg-success text-white">
@@ -76,11 +78,11 @@
 
                 <li class="list-group-item d-flex">
                     <div class="d-flex justify-content-center align-items-center me-3">
+                        <!-- If the user has uploaded a profile image before, display it; otherwise, show the default user image -->
                         <img src="{% if comment[12] %}{{ url_for('static', filename=comment[12]) }}{% else %}{{ url_for('static', filename='yonghu-3.png') }}{% endif %}"
                         class="rounded-circle img-fluid" 
                         alt="Profile Picture" 
                         style="width: 30px;">
-                        
                     </div>
                     <div>
                         <strong>{{comment[6]}}
@@ -89,21 +91,16 @@
                         <p class="mb-1">{{comment[3]}}</p>
                         <small class="text-muted">Posted on {{comment[4]}}</small>
                     </div>
-                    
                 </li>
-
                 {% endfor %}
             {% else %}
-
                 <li class="list-group-item text-center text-muted py-5">Be the first to comment! 🚀 </li>
-
             {% endif %}
-
         </ul>
     </div>
-    
 </div>
 
+<!-- add comment function -->
 <div class="container py-4" style="max-width:800px;">
     <div class="card bg-light shadow-sm">
         <div class="card-body text-center">
