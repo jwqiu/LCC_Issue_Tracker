@@ -80,7 +80,6 @@ Open your browser and go to:
 
 http://localhost:5000
 
-update contribution count
 
 
 
